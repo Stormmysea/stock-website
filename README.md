@@ -115,7 +115,7 @@ git push
 This is a university project for educational purposes.
 
 ## 👨‍💻 Author
-Your Name - [Year] University Project
+zubair  - [first year] University of uc 
 
 ---
 
