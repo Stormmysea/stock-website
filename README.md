@@ -1,9 +1,7 @@
 # StockOS - Retro Stock Market Dashboard
 
-A nostalgic retro terminal-style stock market dashboard built with vanilla JavaScript, Chart.js, and AnimeJS.
+A nostalgic retro terminal-style stock market dashboard built with vanilla JavaScript, Chart.js, and AnimeJs
 
-## 🚀 Live Demo
-Visit the live project: [Your GitHub Pages URL] (after deployment)
 
 ## ✨ Features
 - **Real-time Stock Data** - Live stock prices and updates
@@ -43,12 +41,7 @@ cd stock-website
 - Use Live Server extension in VS Code, or
 - Run: `python -m http.server 8000` then visit `http://localhost:8000`
 
-## 🌐 Deploy to GitHub Pages
 
-1. Push to GitHub (see instructions below)
-2. Go to repository **Settings** → **Pages**
-3. Set source to `main` branch / `root` folder
-4. Your site will be live at: `https://yourusername.github.io/stock-website`
 
 ## 📝 Project Structure
 ```
@@ -59,44 +52,6 @@ stock-website/
 ├── README.md           # This file
 └── .gitignore          # Git ignore rules
 ```
-
-## 🔧 How to Push to GitHub
-
-### First time setup:
-```bash
-# Initialize git
-git init
-
-# Add files
-git add .
-
-# Create first commit
-git commit -m "Initial commit: Retro stock dashboard"
-
-# Add remote (replace with your GitHub repo URL)
-git remote add origin https://github.com/yourusername/stock-website.git
-
-# Push to GitHub
-git branch -M main
-git push -u origin main
-```
-
-### Subsequent updates:
-```bash
-git add .
-git commit -m "Description of changes"
-git push
-```
-
-## 📚 How to Present to Teacher
-
-1. **Share GitHub Link**: Send repository URL
-2. **Share Live Demo**: Send GitHub Pages URL
-3. **Code Review**: Teacher can view all source code on GitHub
-4. **Live Demo**: Show working website with real data
-5. **Documentation**: README explains everything
-
-## 🐛 Troubleshooting
 
 **Data not loading?**
 - Check browser console (F12) for errors
