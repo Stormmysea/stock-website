@@ -28,20 +28,6 @@ A nostalgic retro terminal-style stock market dashboard built with vanilla JavaS
   - [Alpha Vantage](https://www.alphavantage.co/) - Free stock data
   - [NewsAPI](https://newsapi.org/) - Free news data
 
-## 🏃 How to Run Locally
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/stock-website.git
-cd stock-website
-```
-
-2. Open in your browser:
-- Double-click `index.html`, or
-- Use Live Server extension in VS Code, or
-- Run: `python -m http.server 8000` then visit `http://localhost:8000`
-
-
 
 ## 📝 Project Structure
 ```
