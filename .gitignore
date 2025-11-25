@@ -1,0 +1,27 @@
+# API Keys and sensitive data
+*.env
+.env.local
+config.json
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Node modules (if you add npm)
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+build/
+
+# Cache
+.cache/
+*.log

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Stock Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@latest/dist/chartjs-chart-financial.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+  <!-- BIOS Boot Screen lolz -->
+  <div id="boot-screen">
+    <pre class="boot-line" data-text="PhoenixBIOS 4.0 Release 6.0"><span class="boot-text"></span><span class="boot-cursor">_</span></pre>
+    <pre class="boot-line" data-text="CPU: Intel Core Processor Detected..."><span class="boot-text"></span><span class="boot-cursor">_</span></pre>
+    <pre class="boot-line" data-text="Memory Test: 65536K OK"><span class="boot-text"></span><span class="boot-cursor">_</span></pre>
+    <pre class="boot-line" data-text="Detecting IDE Drives..."><span class="boot-text"></span><span class="boot-cursor">_</span></pre>
+    <pre class="boot-line" data-text="Booting StockOS v1.0 ..."><span class="boot-text"></span><span class="boot-cursor">_</span></pre>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="navbar" class="hidden">
+    <div class="nav-container">
+      <div class="nav-logo">STOCK<span class="logo-accent">OS</span></div>
+      <ul class="nav-menu">
+        <li><a href="#dashboard" class="nav-link active" data-section="dashboard">DASHBOARD</a></li>
+        <li><a href="#markets" class="nav-link" data-section="markets">MARKETS</a></li>
+        <li><a href="#about" class="nav-link" data-section="about">ABOUT</a></li>
+        <li><a href="#features" class="nav-link" data-section="features">FEATURES</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle">☰</button>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard -->
+  <div id="main" class="hidden">
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="section active">
+      <div class="header-controls">
+        <h1>STOCK MARKET</h1>
+        <button id="refresh-btn" class="refresh-btn" title="Refresh Data">⟳ REFRESH</button>
+      </div>
+      
+      <!-- Dashboard Layout: Stocks on Left, Terminal & News on Right -->
+      <div class="dashboard-layout">
+        <!-- Left Side: Stock Cards -->
+        <div class="dashboard-left">
+          <div class="stocks-section-wrapper">
+            <h3 class="section-header">LIVE STOCKS</h3>
+            <div class="stock-container" id="stocks">
+              <!-- Stock cards will be inserted here -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Side: Terminal Search & News -->
+        <div class="dashboard-right">
+          <div class="terminal-search-container">
+            <div class="terminal-window">
+              <div class="terminal-header">
+                <span class="terminal-title">STOCKOS TERMINAL v1.0</span>
+                <span class="terminal-controls">
+                  <span class="terminal-btn close"></span>
+                  <span class="terminal-btn minimize"></span>
+                  <span class="terminal-btn maximize"></span>
+                </span>
+              </div>
+              <div class="terminal-body">
+                <div class="terminal-output" id="terminal-output">
+                  <div class="terminal-line">
+                    <span class="terminal-prompt">stockos@market:~$</span> 
+                    <span class="terminal-text">StockOS Terminal v1.0 initialized...</span>
+                  </div>
+                  <div class="terminal-line">
+                    <span class="terminal-prompt">stockos@market:~$</span> 
+                    <span class="terminal-text">Type 'help' for available commands or start typing to filter stocks</span>
+                  </div>
+                </div>
+                <div class="terminal-input-line">
+                  <span class="terminal-prompt">stockos@market:~$</span>
+                  <input 
+                    type="text" 
+                    id="stock-search" 
+                    class="terminal-input" 
+                    placeholder="Type command or stock symbol (type 'help' for commands)..."
+                    autocomplete="off"
+                  />
+                  <span class="terminal-cursor" id="terminal-cursor">_</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- News Container on Right Side -->
+          <div class="news-container" id="news">
+            <!-- Latest news will be inserted here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Markets Section -->
+    <section id="markets" class="section">
+      <h2 class="section-title">MARKET OVERVIEW</h2>
+      
+      <!-- Market Status & Trading Info -->
+      <div class="market-status-panel">
+        <div class="market-status-card">
+          <div class="status-header">AMERICAN MARKET STATUS</div>
+          <div class="status-content">
+            <div class="market-indicator" id="market-indicator">
+              <span class="indicator-dot"></span>
+              <span id="market-status-text">MARKET OPEN</span>
+            </div>
+            <div class="market-time">
+              <span>Current Time:</span>
+              <span id="market-time">--:--:-- EST</span>
+            </div>
+            <div class="trading-session">
+              <span>Session:</span>
+              <span id="trading-session">Regular Trading Hours</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="market-stats">
+          <div class="stat-card">
+            <div class="stat-label">Total Volume</div>
+            <div class="stat-value" id="total-volume">--</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Active Stocks</div>
+            <div class="stat-value" id="active-stocks">--</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Market Cap</div>
+            <div class="stat-value" id="market-cap">--T</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Market Candlestick Chart -->
+      <div class="market-chart-container">
+        <h3 class="chart-title">AMERICAN MARKET INDEX - CANDLESTICK CHART</h3>
+        <div class="candlestick-chart-wrapper">
+          <canvas id="market-candlestick-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Most Active Stocks -->
+      <div class="most-active-section">
+        <h3 class="section-subtitle">MOST ACTIVE STOCKS</h3>
+        <div class="most-active-list" id="most-active-list">
+          <!-- Most active stocks will be inserted here -->
+        </div>
+      </div>
+
+      <!-- All Stocks with Candlestick Charts -->
+      <div class="market-stocks-section">
+        <h3 class="section-subtitle">ALL TRADING STOCKS</h3>
+        <div class="stock-container" id="markets-stocks">
+          <!-- Market stock cards will be inserted here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <h2 class="section-title">ABOUT STOCKOS</h2>
+      <div class="about-content">
+        <div class="about-card">
+          <h3>MISSION</h3>
+          <p>StockOS brings real-time stock market data to your fingertips with a nostalgic retro terminal interface. Experience the power of modern financial data through the lens of classic computing aesthetics.</p>
+        </div>
+        <div class="about-card">
+          <h3>TECHNOLOGY</h3>
+          <p>Built with cutting-edge web technologies including AnimeJS for smooth animations, Chart.js for live data visualization, and responsive design principles for optimal viewing across all devices.</p>
+        </div>
+        <div class="about-card">
+          <h3>FEATURES</h3>
+          <ul class="feature-list">
+            <li>Real-time stock price updates</li>
+            <li>Interactive live charts</li>
+            <li>Latest market news</li>
+            <li>Retro terminal aesthetic</li>
+            <li>Responsive design</li>
+            <li>Smooth animations</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+      <h2 class="section-title">KEY FEATURES</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">📊</div>
+          <h3>Live Charts</h3>
+          <p>Real-time stock price visualization with interactive charts powered by Chart.js</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📰</div>
+          <h3>Market News</h3>
+          <p>Stay updated with the latest financial news and market insights</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <h3>Auto-Refresh</h3>
+          <p>Automatic data updates every 30 seconds to keep you informed</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🎨</div>
+          <h3>Retro Design</h3>
+          <p>Nostalgic terminal-style interface with smooth animations</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📱</div>
+          <h3>Responsive</h3>
+          <p>Perfect viewing experience on desktop, tablet, and mobile devices</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔔</div>
+          <h3>Real-Time Data</h3>
+          <p>Get instant updates on stock prices, changes, and market trends</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer id="footer" class="hidden">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>STOCKOS</h4>
+        <p>Retro Terminal Stock Market Dashboard</p>
+        <p>Real-time financial data with classic computing aesthetics</p>
+      </div>
+      <div class="footer-section">
+        <h4>QUICK LINKS</h4>
+        <ul class="footer-links">
+          <li><a href="#dashboard">Dashboard</a></li>
+          <li><a href="#markets">Markets</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#features">Features</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>DISCLAIMER</h4>
+        <p>This is a demo project for educational purposes. Stock data shown is for demonstration only and should not be used for actual trading decisions.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 StockOS - University Project | Built with AnimeJS & Chart.js</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
