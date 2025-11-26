@@ -255,6 +255,38 @@
       <p>&copy; 2024 StockOS - University Project | Built with AnimeJS & Chart.js</p>
     </div>
   </footer>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  #matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    z-index: -1; /* sends it behind all content */
+  }
+  #content {
+    position: relative;
+    z-index: 1;
+    color: white;
+    padding: 20px;
+  }
+</style>
+
+<iframe 
+  id="matrix-bg"
+  src="https://rezmason.github.io/matrix/?variant=matrix"
+></iframe>
+
+<div id="content">
+  <h1>Welcome to My Stock Website</h1>
+  <p>This is my university project.</p>
+</div>
 
   <script src="script.js"></script>
 </body>
